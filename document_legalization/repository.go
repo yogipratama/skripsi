@@ -35,7 +35,7 @@ func NewRepository(db *gorm.DB) *repository {
 }
 
 func (r *repository) Save(documentLegalization DocumentLegalization) (DocumentLegalization, error) {
-	err := r.db.Create(&documentLegalization).Error
+	err := r.db.Omit("ApprovedByKaryawanAkademikAt", "ApprovedByKaprodiAt", "SignedByWadekAt", "ExpiredAt").Create(&documentLegalization).Error
 	if err != nil {
 		return documentLegalization, err
 	}

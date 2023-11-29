@@ -118,7 +118,7 @@ func (h *wadekDashboardHandler) Update(c *gin.Context) {
 
 	input.ID = id
 
-	file, err := os.ReadFile("file_document/" + documentLegalization.FileNameDocument)
+	file, err := os.ReadFile("/file_document/" + documentLegalization.FileNameDocument)
 	if err != nil {
 		log.Printf("Error : %v", err)
 		c.HTML(http.StatusInternalServerError, "error.html", nil)
@@ -137,7 +137,7 @@ func (h *wadekDashboardHandler) Update(c *gin.Context) {
 		wg.Done()
 	}()
 	wg.Wait()
-	message, err := os.ReadFile("file_signed/" + documentLegalization.FileNameDocument)
+	message, err := os.ReadFile("/file_signed/" + documentLegalization.FileNameDocument)
 	if err != nil {
 		log.Printf("Error : %v", err)
 		c.HTML(http.StatusInternalServerError, "error.html", nil)

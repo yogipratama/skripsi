@@ -2,6 +2,7 @@ package handler
 
 import (
 	"fmt"
+	"log"
 	"math/big"
 	"net/http"
 	"os"
@@ -94,6 +95,7 @@ func (h *wadekDashboardHandler) Update(c *gin.Context) {
 
 	documentLegalization, err := h.documentLegalizationService.GetDocumentLegalizationByID(id)
 	if err != nil {
+		log.Printf("Error : %v", err)
 		c.HTML(http.StatusInternalServerError, "error.html", nil)
 		return
 	}
@@ -118,6 +120,7 @@ func (h *wadekDashboardHandler) Update(c *gin.Context) {
 
 	file, err := os.ReadFile("file_document/" + documentLegalization.FileNameDocument)
 	if err != nil {
+		log.Printf("Error : %v", err)
 		c.HTML(http.StatusInternalServerError, "error.html", nil)
 		return
 	}
@@ -136,6 +139,7 @@ func (h *wadekDashboardHandler) Update(c *gin.Context) {
 	wg.Wait()
 	message, err := os.ReadFile("file_signed/" + documentLegalization.FileNameDocument)
 	if err != nil {
+		log.Printf("Error : %v", err)
 		c.HTML(http.StatusInternalServerError, "error.html", nil)
 		return
 	}

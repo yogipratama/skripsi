@@ -5,32 +5,34 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"os"
 
+	_ "github.com/joho/godotenv/autoload"
 	"github.com/signintech/gopdf"
 	"github.com/skip2/go-qrcode"
 )
 
-func GeneratePDF(pdfBytes []byte, path, expired_at string) {
+func GeneratePDF(pdfBytes []byte, path, uuid, expired_at string) {
 	rs := io.ReadSeeker(bytes.NewReader(pdfBytes))
 
-	png, err := qrcode.Encode("https://facebook.com", qrcode.Medium, 256)
+	png, err := qrcode.Encode(os.Getenv("BASE_URL_SERVER")+uuid, qrcode.Medium, 120)
 	if err != nil {
 		log.Print(err.Error())
 	}
 
 	pdf := gopdf.GoPdf{}
-	pdf.Start(gopdf.Config{PageSize: *gopdf.PageSizeLetter})
+	pdf.Start(gopdf.Config{PageSize: *gopdf.PageSizeA4})
 
 	tmpl := pdf.ImportPageStream(&rs, 1, "/MediaBox")
 
 	pdf.AddPage()
 
-	err = pdf.AddTTFFont("arial", "arial.ttf")
+	err = pdf.AddTTFFont("times-new-roman", "times-new-roman.ttf")
 	if err != nil {
 		log.Print(err.Error())
 	}
 
-	err = pdf.SetFont("arial", "", 10)
+	err = pdf.SetFont("times-new-roman", "", 6)
 	if err != nil {
 		log.Print(err.Error())
 	}
@@ -40,11 +42,14 @@ func GeneratePDF(pdfBytes []byte, path, expired_at string) {
 		log.Print(err.Error())
 	}
 
-	pdf.ImageByHolder(qrcode, 30, 550, nil)
+	err = pdf.ImageByHolder(qrcode, 490, 688, nil)
+	if err != nil {
+		log.Print(err.Error())
+	}
 
-	pdf.SetX(30)
-	pdf.SetY(745)
-	pdf.Cell(nil, fmt.Sprintf("*dokumen ini berlaku sampai tanggal %v", expired_at))
+	pdf.SetX(460)
+	pdf.SetY(830)
+	pdf.Cell(nil, fmt.Sprintf("Dokumen ini berlaku sampai tanggal %v", expired_at))
 
 	pdf.UseImportedTemplate(tmpl, 0, 0, 0, 0)
 

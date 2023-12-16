@@ -133,7 +133,7 @@ func (h *wadekDashboardHandler) Update(c *gin.Context) {
 
 	wg.Add(1)
 	go func() {
-		generate_pdf.GeneratePDF(file, path, expiredAtString)
+		generate_pdf.GeneratePDF(file, path, documentLegalization.UUID, expiredAtString)
 		wg.Done()
 	}()
 	wg.Wait()

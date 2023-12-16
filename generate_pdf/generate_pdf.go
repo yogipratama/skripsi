@@ -21,7 +21,7 @@ func GeneratePDF(pdfBytes []byte, path, uuid, expired_at string) {
 	}
 
 	pdf := gopdf.GoPdf{}
-	pdf.Start(gopdf.Config{PageSize: *gopdf.PageSizeA4})
+	pdf.Start(gopdf.Config{PageSize: *gopdf.PageSizeLetter})
 
 	tmpl := pdf.ImportPageStream(&rs, 1, "/MediaBox")
 

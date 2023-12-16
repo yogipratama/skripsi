@@ -48,7 +48,7 @@ func (h *karyawanDashboardHandler) Index(c *gin.Context) {
 	}
 
 	if roleKaryawan == "Karyawan Akademik Bagian Teknik Sipil dan Arsitektur" {
-		documentLegalizations, err := h.documentLegalizationService.GetAllDocForKaryawan("Teknik Sipil", "Teknik Elektro")
+		documentLegalizations, err := h.documentLegalizationService.GetAllDocForKaryawan("Teknik Sipil", "Arsitektur")
 		if err != nil {
 			c.HTML(http.StatusInternalServerError, "error.html", nil)
 			return
@@ -62,7 +62,7 @@ func (h *karyawanDashboardHandler) Index(c *gin.Context) {
 	}
 
 	if roleKaryawan == "Karyawan Akademik Bagian Teknik Mesin dan Teknik Elektro" {
-		documentLegalizations, err := h.documentLegalizationService.GetAllDocForKaryawan("Teknik Mesin", "Arsitektur")
+		documentLegalizations, err := h.documentLegalizationService.GetAllDocForKaryawan("Teknik Mesin", "Teknik Elektro")
 		if err != nil {
 			c.HTML(http.StatusInternalServerError, "error.html", nil)
 			return

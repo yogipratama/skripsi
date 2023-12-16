@@ -15,7 +15,7 @@ import (
 func GeneratePDF(pdfBytes []byte, path, uuid, expired_at string) {
 	rs := io.ReadSeeker(bytes.NewReader(pdfBytes))
 
-	png, err := qrcode.Encode(fmt.Sprintf("%v/%v", os.Getenv("BASE_URL_SERVER"), uuid), qrcode.Medium, 120)
+	png, err := qrcode.Encode(fmt.Sprintf("%v/dokumen/%v", os.Getenv("BASE_URL_SERVER"), uuid), qrcode.Medium, 120)
 	if err != nil {
 		log.Print(err.Error())
 	}

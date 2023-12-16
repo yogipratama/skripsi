@@ -195,7 +195,7 @@ func (r *repository) UpdateStatusToSignedByWadek(ID int, msgDigest, signature st
 func (r *repository) FindByUUID(UUID string) (DocumentLegalization, error) {
 	var documentLegalization DocumentLegalization
 
-	err := r.db.Preload("User").Preload("Subject").Where("uuid = ?", UUID).Find(&documentLegalization).Error
+	err := r.db.Debug().Preload("User").Preload("Subject").Where("uuid = ?", UUID).Find(&documentLegalization).Error
 	if err != nil {
 		return documentLegalization, err
 	}
